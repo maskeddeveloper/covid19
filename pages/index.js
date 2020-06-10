@@ -42,7 +42,7 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          🇲🇦 مناطق التخفيف من تدابير الحجر الصحي بالمملكة المغربية 🇲🇦
+        🇲🇦 مناطق التخفيف من تدابير الحجر الصحي بالمملكة المغربية 🇲🇦
         </h1>
 
         <p className="description">
@@ -103,10 +103,13 @@ export default function Home() {
       </main>
 
       <footer>
-        <span>
-          Made with 💖 by{" "}
-          <a href="https://facebook.com/medhamime">Mehdi HAMIME</a>
-        </span>
+
+         
+          <a target="_blank" href="https://facebook.com/medhamime"> Made with 💖 by{" "} Mehdi HAMIME</a> 
+          {" "}
+  
+
+          <a target="_blank" href="https://facebook.com/medhamime"> & Association HitMit</a> 
         <a
           href="https://vercel.com?utm_source=mehdihamime.com&utm_medium=mehdihamime.com&utm_campaign=mehdihamime.com"
           target="_blank"
