@@ -9,7 +9,7 @@ export default function Header() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            <!-- Global site tag (gtag.js) - Google Analytics -->
+       
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-EE2X0VV9FM"></script>
             <script>
               window.dataLayer = window.dataLayer || [];
