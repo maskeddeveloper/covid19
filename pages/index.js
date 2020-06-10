@@ -4,11 +4,50 @@ import dataFile from "../components/data/data.json";
 import Header from "../components/Header";
 import Intro from "../components/Intro";
 import Grid from "../components/Grid";
+
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+Modal.setAppElement("#container");
+
 export default function Home() {
   const [data, setData] = useState(dataFile);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = "#f00";
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const [areaSelected, setAreaSelected] = useState({
+    id: 1,
+    region: " undefind",
+    area: 1,
+  });
+
+
+  function showModal(area) {
+    console.log(area);
+    setAreaSelected(area);
+    openModal();
+  }
+
   const handleChange = (event) => {
     setSearching(true);
     if (event.target.value.trim() == "") {
@@ -22,8 +61,9 @@ export default function Home() {
     );
     setSearchResults(results);
   }, [searchTerm]);
+  var subtitle;
   return (
-    <div className="container">
+    <div id="container" className="container">
       <p className="warning">
         {" "}
         موقع غير رسمي المعطيات مأخوذة من{" "}
@@ -41,6 +81,83 @@ export default function Home() {
       <Header />
 
       <main>
+
+
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel={areaSelected.region}
+        >
+          <button
+            className="modal-close-button"
+            aria-label="إغلاق"
+            onClick={closeModal}
+          >
+            إغلاق
+          </button>
+          <h3 style={{ textAlign: "center" }}>{areaSelected.region}</h3>
+          {areaSelected.area == 1 ? (
+            <div style={{ direction: "rtl" }}>
+              <h5 style={{ fontSize: "20px" }}>
+                <u> تخفيف القيود بالمنطقة رقم 1:</u>
+              </h5>
+              <ul>
+                <li>
+                  الخروج دون حاجة لرخصة استثنائية للتنقل داخل المجال الترابي
+                  للعمالة أو الإقليم؛
+                </li>
+                <li>
+                  استئناف النقل العمومي الحضري مع استغلال نسبة لا تتجاوز 50% من
+                  الطاقة الاستيعابية
+                </li>
+                <li>
+                  التنقل داخل المجال الترابي لجهة الإقامة، بدون إلزامية التوفر
+                  على ترخيص (الاقتصار فقط على الإدلاء بالبطاقة الوطنية للتعريف
+                  الإلكترونية)؛
+                </li>
+                <li>
+                  إعادة فتح قاعات الحلاقة والتجميل، مع استغلال نسبة لا تتجاوز
+                  50% من الطاقة الاستيعابية؛
+                </li>
+                <li>
+                  إعادة فتح الفضاءات العمومية بالهواء الطلق (منتزهات، حدائق،
+                  أماكن عامة، إلخ ...)؛
+                </li>
+                <li>
+                  استئناف الأنشطة الرياضية الفردية بالهواء الطلق (المشي،
+                  الدراجات، إلخ...)؛
+                </li>
+                <li>
+                  الإبقاء على جميع القيود الأخرى التي تم إقرارها في حالة الطوارئ
+                  الصحية (منع التجمعات، الاجتماعات، الأفراح، حفلات الزواج،
+                  الجنائز، إلخ، ...).
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div style={{ direction: "rtl" }}>
+              <h5 style={{ fontSize: "20px" }}>
+                <u> تخفيف القيود بالمنطقة رقم 2:</u>
+              </h5>
+              <ul>
+                <li>الخروج يقتضي التوفر على رخصة استثنائية للتنقل؛</li>
+                <li>إغلاق المتاجر على الساعة 8 مساء؛</li>
+                <li>
+                  استئناف النقل العمومي الحضري مع استغلال نسبة لا تتجاوز 50% من
+                  الطاقة الاستيعابية؛
+                </li>
+                <li>
+                  الإبقاء على جميع القيود الأخرى التي تم إقرارها في حالة الطوارئ
+                  الصحية (منع التجمعات، الاجتماعات، الأفراح، حفلات الزواج،
+                  الجنائز، إلخ، ...).
+                </li>
+              </ul>
+            </div>
+          )}
+        </Modal>
+
         <h1 className="title">
           مناطق التخفيف من تدابير الحجر الصحي بالمملكة المغربية
         </h1>
@@ -66,8 +183,14 @@ export default function Home() {
               <p style={{ textAlign: "center" }}>لا توجد نتائج</p>
             ) : (
               searchResults.map((area) => {
+                // onClick={() => { showModal(area) }}
                 return (
-                  <div className="card">
+                  <div
+                    onClick={() => {
+                      showModal(area);
+                    }}
+                    className="card"
+                  >
                     {area.area == 1 ? (
                       <span
                         style={{ backgroundColor: "green" }}
@@ -105,7 +228,8 @@ export default function Home() {
         <a target="_blank" href="https://facebook.com/medhamime">
           {" "}
           Made with 💖 by Mehdi HAMIME
-        </a> &nbsp;{" "} | &nbsp;{" "}
+        </a>{" "}
+        &nbsp; | &nbsp;{" "}
         <a
           href="https://vercel.com?utm_source=mehdihamime.com&utm_medium=mehdihamime.com&utm_campaign=mehdihamime.com"
           target="_blank"
@@ -134,7 +258,6 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          
         }
 
         main {
@@ -273,14 +396,14 @@ export default function Home() {
             flex-direction: column;
           }
           .card {
-            width: 95vh;
+            width: 170vw;
           }
           .description {
-            padding-left: 10vh;
-            padding-right: 10vh;
+            padding-left: 10vm;
+            padding-right: 10vm;
           }
           .container {
-            width: 100vh;
+            width: 200vw;
           }
         }
 
@@ -295,6 +418,60 @@ export default function Home() {
             opacity: 0;
           }
         }
+
+        button {
+          font-size: 0.9rem;
+          font-weight: 700;
+          border: none;
+          border-radius: 3px;
+          padding: 0.3rem 1rem;
+          margin-left: 0.5rem;
+        }
+
+        .button-default {
+          background: #247ba0;
+          color: #fff;
+        }
+
+        .modal-wrapper {
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 1050;
+          width: 100%;
+          height: 100%;
+          overflow-x: hidden;
+          overflow-y: auto;
+          outline: 0;
+        }
+
+        .modal {
+          z-index: 100;
+          background: white;
+          position: relative;
+          margin: 1.75rem auto;
+          border-radius: 3px;
+          max-width: 500px;
+          padding: 2rem;
+          border: 1px solid #eaeaea;
+          border-radius: 10px;
+          top: 30%;
+        }
+
+        .modal-header {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .modal-close-button {
+          font-size: 1.4rem;
+          font-weight: 700;
+          line-height: 1;
+          color: #000;
+          opacity: 0.3;
+          cursor: pointer;
+          border: none;
+        }
       `}</style>
 
       <style jsx global>{`
@@ -304,6 +481,9 @@ export default function Home() {
         body {
           padding: 0;
           margin: 0;
+          font-family: "Cairo", sans-serif;
+        }
+        button{
           font-family: "Cairo", sans-serif;
         }
 

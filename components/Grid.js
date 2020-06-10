@@ -1,13 +1,126 @@
 import React, { useEffect, useState } from "react";
-
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+Modal.setAppElement("#container");
 const Grid = (props) => {
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = "#f00";
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const [areaSelected, setAreaSelected] = useState({
+    id: 1,
+    region: " undefind",
+    area: 1,
+  });
+
+
+  function showModal(area) {
+    console.log(area);
+    setAreaSelected(area);
+    openModal();
+  }
   const [data, setData] = useState(props.data);
   const [zone, setZone] = useState(props.area);
 
   return (
     <div className="grid">
+       <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel={areaSelected.region}
+        >
+          <button
+            className="modal-close-button"
+            aria-label="إغلاق"
+            onClick={closeModal}
+          >
+            إغلاق
+          </button>
+          <h3 style={{ textAlign: "center" }}>{areaSelected.region}</h3>
+    
+          {areaSelected.area == 1 ? (
+            <div style={{ direction: "rtl" }}>
+              <h5 style={{ fontSize: "20px" }}>
+                <u> تخفيف القيود بالمنطقة رقم 1:</u>
+              </h5>
+              <ul>
+                <li>
+                  الخروج دون حاجة لرخصة استثنائية للتنقل داخل المجال الترابي
+                  للعمالة أو الإقليم؛
+                </li>
+                <li>
+                  استئناف النقل العمومي الحضري مع استغلال نسبة لا تتجاوز 50% من
+                  الطاقة الاستيعابية
+                </li>
+                <li>
+                  التنقل داخل المجال الترابي لجهة الإقامة، بدون إلزامية التوفر
+                  على ترخيص (الاقتصار فقط على الإدلاء بالبطاقة الوطنية للتعريف
+                  الإلكترونية)؛
+                </li>
+                <li>
+                  إعادة فتح قاعات الحلاقة والتجميل، مع استغلال نسبة لا تتجاوز
+                  50% من الطاقة الاستيعابية؛
+                </li>
+                <li>
+                  إعادة فتح الفضاءات العمومية بالهواء الطلق (منتزهات، حدائق،
+                  أماكن عامة، إلخ ...)؛
+                </li>
+                <li>
+                  استئناف الأنشطة الرياضية الفردية بالهواء الطلق (المشي،
+                  الدراجات، إلخ...)؛
+                </li>
+                <li>
+                  الإبقاء على جميع القيود الأخرى التي تم إقرارها في حالة الطوارئ
+                  الصحية (منع التجمعات، الاجتماعات، الأفراح، حفلات الزواج،
+                  الجنائز، إلخ، ...).
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div style={{ direction: "rtl" }}>
+              <h5 style={{ fontSize: "20px" }}>
+                <u> تخفيف القيود بالمنطقة رقم 2:</u>
+              </h5>
+              <ul>
+                <li>الخروج يقتضي التوفر على رخصة استثنائية للتنقل؛</li>
+                <li>إغلاق المتاجر على الساعة 8 مساء؛</li>
+                <li>
+                  استئناف النقل العمومي الحضري مع استغلال نسبة لا تتجاوز 50% من
+                  الطاقة الاستيعابية؛
+                </li>
+                <li>
+                  الإبقاء على جميع القيود الأخرى التي تم إقرارها في حالة الطوارئ
+                  الصحية (منع التجمعات، الاجتماعات، الأفراح، حفلات الزواج،
+                  الجنائز، إلخ، ...).
+                </li>
+              </ul>
+            </div>
+          )}
+        </Modal>
+
       {data.map((area) => {
-       return zone == area.area ?  <div className="card">
+       return zone == area.area ?  <div onClick={() => {
+        showModal(area);
+      }} className="card">
             {
                 zone == 1 ?  <span style={{  backgroundColor: "green" }} className="dot Blink"></span> :  <span style={{  backgroundColor: "red" }} className="dot Blink"></span>
             }
@@ -19,6 +132,15 @@ const Grid = (props) => {
      
 
       <style jsx>{`
+          .modal-close-button {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            opacity: 0.3;
+            cursor: pointer;
+            border: none;
+          }
         .grid {
           display: flex;
           align-items: center;
