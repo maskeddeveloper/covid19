@@ -42,7 +42,7 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-        مناطق التخفيف من تدابير الحجر الصحي بالمملكة المغربية 
+          مناطق التخفيف من تدابير الحجر الصحي بالمملكة المغربية
         </h1>
 
         <p className="description">
@@ -61,31 +61,30 @@ export default function Home() {
 
         {searching ? (
           <div className="gridContainer">
-            <p className="gridTitle">   نتائج البحث </p>
-            {
-            searchResults.length == 0 ?  
-            <p style={{textAlign: "center"}}>لا توجد نتائج</p>
-            : searchResults.map((area) => {
-              return (
-                <div className="card">
-                  {area.area == 1 ? (
-                    <span
-                      style={{ backgroundColor: "green" }}
-                      className="dot Blink"
-                    ></span>
-                  ) : (
-                    <span
-                      style={{ backgroundColor: "red" }}
-                      className="dot Blink"
-                    ></span>
-                  )}
+            <p className="gridTitle"> نتائج البحث </p>
+            {searchResults.length == 0 ? (
+              <p style={{ textAlign: "center" }}>لا توجد نتائج</p>
+            ) : (
+              searchResults.map((area) => {
+                return (
+                  <div className="card">
+                    {area.area == 1 ? (
+                      <span
+                        style={{ backgroundColor: "green" }}
+                        className="dot Blink"
+                      ></span>
+                    ) : (
+                      <span
+                        style={{ backgroundColor: "red" }}
+                        className="dot Blink"
+                      ></span>
+                    )}
 
-                  <h3>{area.region}</h3>
-                </div>
-              );
-            })
-            
-            }
+                    <h3>{area.region}</h3>
+                  </div>
+                );
+              })
+            )}
           </div>
         ) : (
           <div className="dataContainer">
@@ -103,13 +102,10 @@ export default function Home() {
       </main>
 
       <footer>
-
-         
-          <a target="_blank" href="https://facebook.com/medhamime"> Made with 💖 by{" "} Mehdi HAMIME</a> 
+        <a target="_blank" href="https://facebook.com/medhamime">
           {" "}
-  
-
-          <a target="_blank" href="https://facebook.com/medhamime"> & Association HitMit</a> 
+          Made with 💖 by Mehdi HAMIME
+        </a> &nbsp;{" "} | &nbsp;{" "}
         <a
           href="https://vercel.com?utm_source=mehdihamime.com&utm_medium=mehdihamime.com&utm_campaign=mehdihamime.com"
           target="_blank"
