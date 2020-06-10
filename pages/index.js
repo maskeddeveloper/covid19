@@ -134,7 +134,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 100vh;
+          
         }
 
         main {
@@ -278,6 +278,9 @@ export default function Home() {
           .description {
             padding-left: 10vh;
             padding-right: 10vh;
+          }
+          .container {
+            width: 100vh;
           }
         }
 
