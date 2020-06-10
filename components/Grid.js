@@ -76,6 +76,9 @@ const Grid = (props) => {
             width: 100%;
             flex-direction: column;
           }
+          .card {
+            width: 95vh;
+          }
         }
 
         .Blink {

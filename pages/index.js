@@ -134,6 +134,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          width: 100vh;
         }
 
         main {
@@ -270,6 +271,13 @@ export default function Home() {
           .grid {
             width: 100%;
             flex-direction: column;
+          }
+          .card {
+            width: 95vh;
+          }
+          .description {
+            padding-left: 10vh;
+            padding-right: 10vh;
           }
         }
 
