@@ -227,7 +227,7 @@ export default function Home() {
       <footer>
         <a target="_blank" href="https://facebook.com/medhamime">
           {" "}
-          Made with 💖 by Mehdi HAMIME & Association HitMit
+          Made with 💖 by Mehdi HAMIME 
         </a>{" "}
         &nbsp; | &nbsp;{" "}
         <a
